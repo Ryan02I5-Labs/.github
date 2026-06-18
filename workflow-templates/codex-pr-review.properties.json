@@ -1,0 +1,9 @@
+{
+  "name": "Codex PR Review Caller",
+  "description": "Starter caller workflow for the Ryan02I5-Labs reusable Codex PR review pipeline.",
+  "iconName": "octicon code-review",
+  "categories": [
+    "Automation",
+    "Continuous integration"
+  ]
+}

@@ -1,0 +1,35 @@
+name: codex-pr-review
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  review:
+    if: github.event_name == 'pull_request_target' && vars.BOT_AUTO_REVIEW_ENABLED == 'true' && github.actor != 'dependabot[bot]'
+    permissions:
+      actions: read
+      contents: read
+      issues: write
+      pull-requests: write
+    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@2116263979cc2ecf09c2dae8aee657c96dc0094c
+    with:
+      helper_repository: Ryan02I5-Labs/github-automation
+      helper_ref: 2116263979cc2ecf09c2dae8aee657c96dc0094c
+      review_run_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"ubuntu-latest"' }}
+      publish_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"ubuntu-latest"' }}
+      review_run_safety_strategy: unprivileged-user
+      review_run_codex_user: codex
+      bot_trigger_handle: ${{ vars.BOT_TRIGGER_HANDLE }}
+      bot_auto_review_enabled: ${{ vars.BOT_AUTO_REVIEW_ENABLED }}
+      bot_allowed_users: ${{ vars.BOT_ALLOWED_USERS }}
+      bot_allowed_bots: ${{ vars.BOT_ALLOWED_BOTS }}
+      bot_responses_api_endpoint: ${{ vars.BOT_RESPONSES_API_ENDPOINT }}
+      codex_model: ${{ vars.CODEX_MODEL }}
+      codex_review_model: ${{ vars.CODEX_REVIEW_MODEL || vars.CODEX_MODEL }}
+      codex_reasoning_effort: ${{ vars.CODEX_REASONING_EFFORT }}
+    secrets:
+      REVIEW_BOT_PROVIDER_API_KEY: ${{ secrets.REVIEW_BOT_PROVIDER_API_KEY }}
+      CODEX_PROVIDER_API_KEY: ${{ secrets.CODEX_PROVIDER_API_KEY }}
+      CODEX_BOT_APP_ID: ${{ secrets.CODEX_BOT_APP_ID }}
+      CODEX_BOT_PRIVATE_KEY: ${{ secrets.CODEX_BOT_PRIVATE_KEY }}
