@@ -12,12 +12,12 @@ jobs:
       contents: read
       issues: write
       pull-requests: write
-    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@2116263979cc2ecf09c2dae8aee657c96dc0094c
+    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@d532cc8b6943970660d46c704367fcdc6f3e7195
     with:
       helper_repository: Ryan02I5-Labs/github-automation
-      helper_ref: 2116263979cc2ecf09c2dae8aee657c96dc0094c
-      review_run_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"ubuntu-latest"' }}
-      publish_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"ubuntu-latest"' }}
+      helper_ref: d532cc8b6943970660d46c704367fcdc6f3e7195
+      review_run_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"gx10-personal-k3s-arc"' }}
+      publish_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"gx10-personal-k3s-arc"' }}
       review_run_safety_strategy: unprivileged-user
       review_run_codex_user: codex
       bot_trigger_handle: ${{ vars.BOT_TRIGGER_HANDLE }}
