@@ -7,6 +7,14 @@
 3. 不把 repo-specific 运行时密钥、环境值或临时调试文件提交进仓库。
 4. 对基础设施、CI、自动化类改动，合并前给出可复核的验证证据。
 
+## Issue closeout ownership
+
+Issue closeout 默认按 ownership 判断，不把已满足验收的自有 issue 留成手工尾巴：
+
+- 当前执行者是 issue author、assignee，或 issue / runbook 明确指定的 owner 时，PR 合并、验收满足、无剩余运行态 gate 后，应留下 evidence comment 并主动关闭 issue。
+- 如果 issue 属于其他 owner，或 ownership 不明确，执行者应留下 closeout evidence，并请求 owner 确认或关闭。
+- 对 release、deployment、runner、secret、permission 或 production-impacting 任务，PR merge 只是中间证据；只有真实交付面或运行态验收完成后，才进入 closeout。
+
 ## 默认技术取舍顺序
 
 跨 repository 的默认判断顺序固定为：
