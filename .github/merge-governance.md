@@ -1,5 +1,7 @@
 # Repository merge governance
 
+Implementation tracking and API readback: [.github #13](https://github.com/Ryan02I5-Labs/.github/issues/13). Rollout started 2026-10-01; consult the issue for the current accepted settings and verification date.
+
 This policy applies to this repository. Changes use an issue-linked pull request
 and squash merge. The owner operates the official Codex review gate.
 
@@ -12,8 +14,17 @@ and squash merge. The owner operates the official Codex review gate.
    that head. A Completed summary alone is insufficient: inspect the final review
    and findings. A new commit, including a branch update, needs a new review.
 5. Fix actionable findings, obtain a new clean review, and resolve review conversations.
-6. Read the head SHA again and merge with
-   `gh pr merge <PR> --squash --match-head-commit <full-head-sha>`.
+6. Immediately re-read the base SHA and confirm the PR branch contains it. If the
+   base advanced, update the branch and repeat the checks and review for the new head.
+   Re-read required checks, conversations and `allow_auto_merge=false`; stop if any
+   requirement is pending or changed. Read the full head SHA again and explicitly
+   merge through GitHub's native merge API, which does not enable Auto-Merge:
+   `gh api --method PUT repos/<owner>/<repo>/pulls/<PR>/merge -f merge_method=squash -f sha=<full-head-sha>`.
+   Inspect the response: only `merged: true` means completion. GitHub's strict
+   required CI enforces freshness where configured. Without CI, the final base
+   recheck is an owner-operated safeguard; this API has no atomic expected-base
+   parameter, and `--match-head-commit` in the alternative CLI command guards only
+   the head. Neither command alone proves that the base is unchanged.
 7. Verify the merged commit and applicable post-merge workflows or runtime convergence
    before closing the issue and cleaning task branches and worktrees.
 
@@ -40,7 +51,7 @@ the linked implementation issue; this document alone does not prove enforcement.
 
 ## Actions and dependencies
 
-Pin Actions to full commit SHAs and retain a version comment. Use GitHub's native
+Pin Actions to full commit SHAs and retain a version comment (or an explicit reviewed revision for a reusable workflow without releases). Use GitHub's native
 Actions permissions policy and read-only default workflow tokens; grant job-level
 write access only where an existing publishing or credential flow needs it.
 Dependabot Actions updates retain the same review requirements. Existing paused
