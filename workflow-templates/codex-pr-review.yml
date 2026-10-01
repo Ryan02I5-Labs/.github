@@ -12,10 +12,10 @@ jobs:
       contents: read
       issues: write
       pull-requests: write
-    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@66dcee7f1a1fd31734269cc1f6ae12b4ba5100c8
+    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@eb110f910fe621f70c06903cb904c904b58c646e
     with:
       helper_repository: Ryan02I5-Labs/github-automation
-      helper_ref: 66dcee7f1a1fd31734269cc1f6ae12b4ba5100c8
+      helper_ref: eb110f910fe621f70c06903cb904c904b58c646e
       review_run_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"ubuntu-24.04"' }}
       publish_runs_on_json: ${{ vars.PK_REVIEW_RUNS_ON_JSON || '"ubuntu-24.04"' }}
       review_run_safety_strategy: unprivileged-user
