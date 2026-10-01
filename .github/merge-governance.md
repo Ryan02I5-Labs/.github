@@ -9,7 +9,7 @@ and squash merge. The owner operates the official Codex review gate.
 
 1. Update a behind branch using GitHub's Update branch button or `gh pr update-branch`.
 2. Wait for the required GitHub Actions checks on the updated branch, where configured.
-3. Request official Codex review with `@codex review` for the current PR head.
+3. Capture the full `reviewed_head_sha` before requesting official Codex review with `@codex review`; keep that value bound to its review result.
 4. Require a clean verdict from `chatgpt-codex-connector[bot]` explicitly covering
    that head. A Completed summary alone is insufficient: inspect the final review
    and findings. A new commit, including a branch update, needs a new review.
@@ -17,9 +17,9 @@ and squash merge. The owner operates the official Codex review gate.
 6. Immediately re-read the base SHA and confirm the PR branch contains it. If the
    base advanced, update the branch and repeat the checks and review for the new head.
    Re-read required checks, conversations and `allow_auto_merge=false`; stop if any
-   requirement is pending or changed. Read the full head SHA again and explicitly
+   requirement is pending or changed. Read the full head SHA again and require it to equal the saved `reviewed_head_sha`; if it differs, repeat the checks and review instead of replacing the saved value. Explicitly
    merge through GitHub's native merge API, which does not enable Auto-Merge:
-   `gh api --method PUT repos/<owner>/<repo>/pulls/<PR>/merge -f merge_method=squash -f sha=<full-head-sha>`.
+   `gh api --method PUT repos/<owner>/<repo>/pulls/<PR>/merge -f merge_method=squash -f sha=<reviewed-head-sha>`.
    Inspect the response: only `merged: true` means completion. GitHub's strict
    required CI enforces freshness where configured. Without CI, the final base
    recheck is an owner-operated safeguard; this API has no atomic expected-base
