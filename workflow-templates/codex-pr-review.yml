@@ -6,13 +6,13 @@ on:
 
 jobs:
   review:
-    if: github.event_name == 'pull_request_target' && vars.BOT_AUTO_REVIEW_ENABLED == 'true' && github.actor != 'dependabot[bot]'
+    if: github.event_name == 'pull_request_target' && vars.BOT_AUTO_REVIEW_ENABLED == 'true' && github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
       actions: read
       contents: read
       issues: write
       pull-requests: write
-    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@eb110f910fe621f70c06903cb904c904b58c646e
+    uses: Ryan02I5-Labs/github-automation/.github/workflows/reusable-codex-pr-review.yml@eb110f910fe621f70c06903cb904c904b58c646e # reviewed helper revision eb110f9
     with:
       helper_repository: Ryan02I5-Labs/github-automation
       helper_ref: eb110f910fe621f70c06903cb904c904b58c646e
