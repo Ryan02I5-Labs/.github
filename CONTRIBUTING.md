@@ -44,9 +44,22 @@ Issue closeout 默认按 ownership 判断，不把已满足验收的自有 issue
 
 这条原则是长期默认要求。
 
+## 排障与事故处理
+
+线上故障、告警、CI/CD 或自动化异常，默认按现代 SRE 的事故处理方法推进。以 Google SRE 官方资料为基础：[Effective Troubleshooting](https://sre.google/sre-book/effective-troubleshooting/)、[Managing Incidents](https://sre.google/sre-book/managing-incidents/)、[Incident Response](https://sre.google/workbook/incident-response/)、[Postmortem Culture](https://sre.google/sre-book/postmortem-culture/)。标“组织规则”的条目是本组织的补充，不出自上述资料。
+
+- 先判断影响范围和严重程度。能用已知安全的手段恢复服务的，先止损并确认止损生效，再追根因。
+- 证据先于结论。沿请求链路逐段定位，先查“最近改了什么”；每个假设都配一个能证伪它的检查，已排除的方向也记下来。
+- 动手前保留证据。重启、删除、回滚之前先留存日志、事件和指标，并注意各证据源的保留期。止损紧急时，先快速留存最小必要证据（当前状态、最近日志），再止损。
+- 结论标明证据等级（组织规则，见上文“依据与核实”）。日志或指标直接证明的写成事实；与现象吻合但没有直证的，标为“推断”或“未核实”。
+- 修根因，不掩盖症状（组织规则）。不为了让告警消失去放宽阈值、调探针或反复重启，除非有依据说明那就是正确配置。
+- 收尾做无责复盘。影响、时间线、根因和已排除项写进 issue；可观测性、告警（组织规则：告警链路本身要有独立于被监控对象的通知渠道）、韧性等改进项按官方或社区推荐经 PR 落地，不只停留在对话里。
+
 ## Agent skill / 社区工具边界
 
 官方 agent skill、官方 CLI 或官方 provider 在当前 runtime 暴露时，应优先作为辅助路径使用；如果当前 runtime 没有暴露对应 skill，不得让任务变成不可执行要求，必须回落到官方文档、官方 CLI / SDK / provider、现有 runbook 与 live evidence。
+
+当前 runtime 没有合适的 skill 时，可以自行从 skill 目录查找候选（例如 `npx skills find <关键词>`）。使用前先读它的 `SKILL.md` 源码、许可证和维护状态；找到的 skill 同样只作辅助，适用下一段的边界。
 
 社区 skill、generator、validator 或第三方 helper 只能作为辅助验证、生成或排查工具。它们不能覆盖官方文档、repo-local policy、安全/密钥边界、review gate、CI gate 或已有运行时责任边界。
 
