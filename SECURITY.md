@@ -1,9 +1,5 @@
 # Security Policy
 
-如果你发现的是安全问题、密钥泄露、权限配置缺陷、供应链风险或可能影响运行环境的漏洞：
-
-- 不要先开 public issue
-- 先通过维护者的私下渠道联系
-- 描述影响范围、复现条件、受影响仓库和建议的缓解方式
-
-普通功能问题、文档问题和使用问题请走仓库 issue。
+Please report security issues privately. Use GitHub private vulnerability
+reporting on the affected repository when it is enabled; do not open a public
+issue for a suspected vulnerability.
