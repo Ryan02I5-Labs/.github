@@ -1,3 +1,3 @@
 # .github
 
-Shared repository defaults.
+Organization profile and security policy.
