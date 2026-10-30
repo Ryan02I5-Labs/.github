@@ -55,6 +55,19 @@ Issue closeout 默认按 ownership 判断，不把已满足验收的自有 issue
 - 修根因，不掩盖症状（组织规则）。不为了让告警消失去放宽阈值、调探针或反复重启，除非有依据说明那就是正确配置。
 - 收尾做无责复盘。影响、时间线、根因和已排除项写进 issue；可观测性、告警（组织规则：告警链路本身要有独立于被监控对象的通知渠道）、韧性等改进项按官方或社区推荐经 PR 落地，不只停留在对话里。
 
+## 公开与私有信息边界
+
+本组织同时有公开和私有仓库。公开仓库（包括本仓库）、上游项目和其他公开位置，统称“公开表面”。
+
+- 公开表面的 issue、PR、评论、评审回复、提交说明、发布说明和文件里，不写私有仓库的名字、链接或 issue / PR 编号，也不写内部主机、runner、账号、组织内部流程等私有标识。变更和动机按公开产品本身来描述。社区做法见 [OpenCraft handbook](https://handbook.opencraft.com/en/latest/processes/pull_request/)、[Coder](https://github.com/coder/internal)、[repo-template #3](https://github.com/yk-tanigawa/repo-template/pull/3)、[Meticulous #42](https://github.com/alwaysmeticulous/skills/pull/42)。
+- 引用只做单向：私有记录可以链接公开记录，公开记录不反向链接私有记录。
+- 组织级 `.github` 仓库必须公开，才能提供默认社区文件和组织主页（[GitHub 文档](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)），因此这里只放通用规则。只给成员看的组织主页放在私有仓库 `.github-private`（[GitHub 文档](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile)）。
+- 已经公开的私有信息（组织规则）：只编辑不算清除，所有公开表面都要清点一遍（[codeassembly #711](https://github.com/williamthorsen/codeassembly/issues/711)）。
+  - 正文或评论：改写后删除旧修订（[GitHub 文档](https://docs.github.com/en/communities/moderating-comments-and-conversations/managing-disruptive-comments#deleting-sensitive-information-from-a-comments-history)）。
+  - issue：可以转移到同一 owner 下的私有仓库，也可以删除。PR 不能转移，按正文的方式处理。
+  - 提交历史：只有重写历史并请 GitHub Support 清理缓存视图才能清除（[GitHub 文档](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)）。对只含标识、不含凭据的历史，评估后可以记录为接受的风险。
+  - 凭据：先轮换，再清理。
+
 ## Agent skill / 社区工具边界
 
 官方 agent skill、官方 CLI 或官方 provider 在当前 runtime 暴露时，应优先作为辅助路径使用；如果当前 runtime 没有暴露对应 skill，不得让任务变成不可执行要求，必须回落到官方文档、官方 CLI / SDK / provider、现有 runbook 与 live evidence。
